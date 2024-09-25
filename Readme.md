@@ -51,13 +51,7 @@ Isso gerará um arquivo JAR na pasta `target`.
 2. **Execute o JAR**, passando o caminho absoluto do seu arquivo JSON como argumento. Use o seguinte comando:
 
     ```bash
-    java -jar target/capital-gain-calculator.jar /caminho/para/seu/arquivo.json
+    java -jar target/capital-gains-1.0-SNAPSHOT.jar /caminho/para/seu/arquivo.json
     ```
 
-3. **Verifique os resultados**. Os resultados do cálculo do imposto serão salvos no diretório `output` como um arquivo JSON.
-
-## Exemplo de Execução
-
-```bash
-java -jar target/capital-gain-calculator.jar /home/usuario/dados/trades.json
-```
+3. **Verifique os resultados**. Os resultados do cálculo do imposto serão salvos no diretório `output` como um arquivo JSON. Além disso eles são printados durante a execução do script.
