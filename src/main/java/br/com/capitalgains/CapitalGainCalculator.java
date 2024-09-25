@@ -9,7 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,6 +45,7 @@ public class CapitalGainCalculator {
 
         for (String inputFilePath : args) {
             try {
+                // Lê e converte o arquivo JSON em objetos Trade
                 List<Trade> trades = objectMapper.readValue(new File(inputFilePath),
                         objectMapper.getTypeFactory().constructCollectionType(List.class, Trade.class));
                 logger.info("Parsed trades from {}: {}", inputFilePath, trades);
@@ -61,6 +65,8 @@ public class CapitalGainCalculator {
                     writer.write(outputJson);
                     logger.info("Output written to file: {}", outputFilePath);
                 }
+            } catch (DatabindException e) {
+                logger.error("JSON inválido em {}: {}", inputFilePath, e.getMessage());
             } catch (IOException e) {
                 logger.error("Error processing trades from {}: {}", inputFilePath, e.getMessage());
             }

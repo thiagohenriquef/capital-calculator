@@ -19,20 +19,20 @@ public class CapitalGainTaxStrategy implements TaxStrategy {
         List<BigDecimal> taxes = new ArrayList<>();
 
         for (Trade trade : trades) {
-            BigDecimal tax = BigDecimal.ZERO;
+            BigDecimal tax = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 
             if (trade.getOperation() == Operation.BUY) {
                 // Atualiza a média ponderada de custo
                 averageCost = averageCost.multiply(BigDecimal.valueOf(totalQuantity))
                         .add(BigDecimal.valueOf(trade.getUnitCost()).multiply(BigDecimal.valueOf(trade.getQuantity())))
-                        .divide(BigDecimal.valueOf(totalQuantity + trade.getQuantity()), 2,  RoundingMode.HALF_UP);
+                        .divide(BigDecimal.valueOf(totalQuantity + trade.getQuantity()), 2, RoundingMode.HALF_UP);
                 totalQuantity += trade.getQuantity();
             } else if (trade.getOperation() == Operation.SELL) {
                 BigDecimal totalSaleValue = BigDecimal.valueOf(trade.getUnitCost()).multiply(BigDecimal.valueOf(trade.getQuantity()));
                 BigDecimal costOfSoldShares = averageCost.multiply(BigDecimal.valueOf(trade.getQuantity()));
                 BigDecimal profit = totalSaleValue.subtract(costOfSoldShares);
 
-                // Verifica se há prejuízo acumulado para deduzir
+                // Deduzir prejuízos acumulados
                 if (profit.compareTo(BigDecimal.ZERO) > 0) {
                     if (totalLoss.compareTo(BigDecimal.ZERO) > 0) {
                         BigDecimal deductible = totalLoss.min(profit);
@@ -43,14 +43,14 @@ public class CapitalGainTaxStrategy implements TaxStrategy {
                     totalLoss = totalLoss.add(profit.negate()); // Acumula prejuízo
                 }
 
-                // Se a venda é maior que R$ 20.000,00, calcula imposto
+                // Verifica se a venda é maior que R$ 20.000,00 e calcula o imposto
                 if (totalSaleValue.compareTo(BigDecimal.valueOf(20000)) > 0) {
                     if (profit.compareTo(BigDecimal.ZERO) > 0) {
-                        tax = profit.multiply(BigDecimal.valueOf(0.20)).setScale(2, RoundingMode.HALF_UP); // 20% sobre lucro
+                        tax = profit.multiply(BigDecimal.valueOf(0.20)).setScale(2, RoundingMode.HALF_UP);
                     }
                 }
             }
-            taxes.add(tax.setScale(2, RoundingMode.HALF_UP)); // Garantir 2 casas decimais
+            taxes.add(tax); // Adiciona o imposto à lista
         }
         return taxes;
     }
