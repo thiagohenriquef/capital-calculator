@@ -49,7 +49,7 @@ public class CapitalGainCalculatorTest {
             BigDecimal expectedTax = expectedTaxes.get(i).getTax().setScale(2, RoundingMode.HALF_UP);
             BigDecimal actualTax = calculatedTaxes.get(i).setScale(2, RoundingMode.HALF_UP);
             assertEquals(expectedTax, actualTax,
-                    String.format("Imposto calculado não corresponde ao esperado para o caso" + inputFilePath));
+                    String.format("Imposto calculado não corresponde ao esperado para o caso ==>" + inputFilePath));
         }
     }
 

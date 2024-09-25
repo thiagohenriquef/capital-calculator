@@ -45,7 +45,6 @@ public class CapitalGainCalculator {
 
         for (String inputFilePath : args) {
             try {
-                // Lê e converte o arquivo JSON em objetos Trade
                 List<Trade> trades = objectMapper.readValue(new File(inputFilePath),
                         objectMapper.getTypeFactory().constructCollectionType(List.class, Trade.class));
                 logger.info("Parsed trades from {}: {}", inputFilePath, trades);
