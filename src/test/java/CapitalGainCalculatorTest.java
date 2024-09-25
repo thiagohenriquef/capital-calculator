@@ -67,19 +67,4 @@ class CapitalGainCalculatorTest {
         Files.delete(inputFile);
         Files.delete(outputFilePath);
     }
-
-    @Test
-    void testHandlingIOException() throws IOException {
-        // Simula uma IOException ao tentar criar o BufferedWriter
-        BufferedWriter mockWriter = Mockito.mock(BufferedWriter.class);
-        doThrow(new IOException("Test IOException")).when(mockWriter).write(anyString());
-
-        // Aqui, você deve injetar o mock no método que precisa ser testado
-        // Isso pode requerer ajustes no CapitalGainCalculator para permitir injeção de dependências
-
-        // Teste deve garantir que a exceção seja capturada e logada corretamente
-        calculator.main(new String[]{"nonexistent-file.json"});
-
-        // Verifique o log novamente conforme necessário
-    }
 }

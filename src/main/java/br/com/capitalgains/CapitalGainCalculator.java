@@ -55,7 +55,7 @@ public class CapitalGainCalculator {
                     taxes.add(new Tax(taxValue));
                 }
 
-                String outputJson = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(taxes);
+                String outputJson = objectMapper.writeValueAsString(taxes);
                 logger.info("Calculated taxes for {}: {}", inputFilePath, outputJson);
                 String outputFileName = "output-" + Paths.get(inputFilePath).getFileName().toString();
                 Path outputFilePath = outputDir.resolve(outputFileName);
