@@ -4,6 +4,7 @@ import br.com.capitalgains.model.Tax;
 import br.com.capitalgains.model.Trade;
 import br.com.capitalgains.strategy.tax.CapitalGainTaxStrategy;
 import br.com.capitalgains.strategy.tax.TaxStrategy;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
